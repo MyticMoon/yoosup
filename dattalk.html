@@ -1,0 +1,100 @@
+	<head>
+	  <title>Share your opinions online</title>
+	</head>
+
+	<body>
+		{{> renderPage}}
+	</body>
+
+	<template name="chatwindow">
+		{{> entryfield}}
+		{{> messages}}
+	</template>
+
+	<template name="homepage">	
+		<div class="navbar navbar-static-top navbar-inverse">
+ 
+	      <div class="navbar-inner">
+	        <div class="container">
+	          <a class="brand" href="/">Epoll</a>
+	          <ul class="nav pull-right">
+	            <li>
+	              {{> loginButtons}}
+	            </li>
+	          </ul>
+	        </div>
+	      </div>
+		 
+		</div>
+
+		<div class="zopim" __jx__id="___$_51 ___$_51" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; padding: 0px; border: 0px none; background: none repeat scroll 0% 0% transparent; overflow: hidden; position: fixed; z-index: 16000002; width: 190px; height: 30px; right: 10px; bottom: 0px; display: none;">
+			<iframe frameborder="0" style="background-color: transparent; vertical-align: text-bottom; position: relative; width: 100%; height: 100%; margin: 0px; overflow: hidden;" src="javascript:false">
+				
+			</iframe>
+		</div>
+		<div class="zopim" __jx__id="___$_4 ___$_4" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; padding: 0px; border: 0px none; background: none repeat scroll 0% 0% transparent; overflow: hidden; position: fixed; z-index: 16000001; right: 10px; bottom: 0px; border-top-left-radius: 5px; border-top-right-radius: 5px; display: block; width: 290px; height: 400px; box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.1);">
+			<iframe frameborder="0" style="background-color: transparent; vertical-align: text-bottom; position: relative; width: 100%; height: 100%; margin: 0px; overflow: hidden;" src="/chatwindow">
+				
+
+			</iframe>
+		</div>
+
+		<div class="container" id="main">
+			{{#if currentUser}}
+				{{> addquestion}}
+			{{/if}}
+			{{#unless currentUser}}
+				{{> banner}}
+			{{/unless}}
+			{{> questions}}
+		</div>
+	</template>
+
+	<template name="banner">
+		<div class="container">
+			<div class="row">
+				<div class="span6">
+					<div class="well">
+						<h4>Sign in using Twitter to submit new question or vote existing questions. </h4>
+						{{> loginButtons}}
+					</div>
+				</div>
+			</div>
+		</div>xt
+	</template>
+
+	<template name="addquestion">
+		<textarea rows="3" class="input-xxlarge" name="questionText" id="questionText" placeholder="Add your question"></textarea><br/>
+		<input type="button" class="btn-info add-question" value="Add Question"/>
+	</template>
+
+	<template name="questions">
+	    <h2>All Questions</h2>
+	    {{#each items}}
+	        {{> question}}
+	     {{/each}}
+	</template>
+	 
+	<template name="question">
+	    <div>
+	        <p class="lead">
+	            {{questionText}}
+	            <a class="btn btn-small btn-success yes {{#unless yescurrentUser}}disabled{{/unless}}" href="#"><i class="icon-thumbs-up"></i> Yes {{yes}}</a>
+	 
+	            <a class="btn btn-small btn-danger no {{#unless currentUser}}disabled{{/unless}}" href="#"><i class="icon-thumbs-down"></i> No {{no}}</a>
+	        </p>
+	    </div>
+	</template>
+
+	<template name="entryfield">
+		<input type="text" id="name" placeholder="Name" /> 
+		<input type="text" id="message" placeholder="Your message" /> 
+	</template>
+
+	<template name="messages">
+	    <p>
+	        {{#each messages}}
+	            <strong>{{name}}</strong>- {{message}} <br>
+	        {{/each}}
+	    </p>
+	</template>
