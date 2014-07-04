@@ -1,0 +1,33 @@
+1) Set up meteor on heroku 
+
+https://github.com/jordansissel/heroku-buildpack-meteor
+
+	1a) Router documentations: 
+	https://github.com/tmeasday/meteor-router
+	http://www2.bindle.me/blog/index.php/679/page-transitions-in-meteor-getleague-com  
+	2b) Iron Router (might be better solution, more popular)
+
+-------------------------------------------------------
+
+2) Next steps:
+
+a) Design the chat widget (v)
+
+b) Different conversation for different users.
+	b1) Design admin pages: to chat with multiple users
+		- Use modal -> each click render a new modal (v)
+	b2) Design database
+
+c) All chat with admin
+
+d) To access chat widget: 
+
+Link : chat/sender/receiver
+
+
+-------------------------------------------------------
+
+-set up on building process page
+-need to come up with the process of setting up (marketing)
+-build up a theme for the website (cost $100/month, theme $1000) could be better than Zopim right now
+-invitation discount

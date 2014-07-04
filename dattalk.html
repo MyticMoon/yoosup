@@ -8,7 +8,7 @@
 
 	<template name="chatwindow">
 		{{> entryfield}}
-		{{> messages}}
+		<!-- {{> messages}} -->
 	</template>
 
 	<template name="homepage">	
@@ -34,8 +34,7 @@
 		</div>
 		<div class="zopim" __jx__id="___$_4 ___$_4" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; padding: 0px; border: 0px none; background: none repeat scroll 0% 0% transparent; overflow: hidden; position: fixed; z-index: 16000001; right: 10px; bottom: 0px; border-top-left-radius: 5px; border-top-right-radius: 5px; display: block; width: 290px; height: 400px; box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.1);">
 			<iframe frameborder="0" style="background-color: transparent; vertical-align: text-bottom; position: relative; width: 100%; height: 100%; margin: 0px; overflow: hidden;" src="/chatwindow">
-				
-
+			
 			</iframe>
 		</div>
 
@@ -84,17 +83,4 @@
 	            <a class="btn btn-small btn-danger no {{#unless currentUser}}disabled{{/unless}}" href="#"><i class="icon-thumbs-down"></i> No {{no}}</a>
 	        </p>
 	    </div>
-	</template>
-
-	<template name="entryfield">
-		<input type="text" id="name" placeholder="Name" /> 
-		<input type="text" id="message" placeholder="Your message" /> 
-	</template>
-
-	<template name="messages">
-	    <p>
-	        {{#each messages}}
-	            <strong>{{name}}</strong>- {{message}} <br>
-	        {{/each}}
-	    </p>
 	</template>

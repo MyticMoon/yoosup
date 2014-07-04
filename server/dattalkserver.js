@@ -1,9 +1,18 @@
 Questions = new Meteor.Collection("questions");
 Messages = new Meteor.Collection("messages");
+AdminConversations = new Meteor.Collection("adminconversations");
+Conversations = new Meteor.Collection("conversations");
+
 
 Meteor.startup(function () {
     
 });
+
+// AdminConversations.allow({
+// 	'insert': function () {
+// 		return true;
+// 	}
+// })
 
 Meteor.methods({
  	addQuestion: function(questionText){
@@ -27,21 +36,24 @@ Meteor.methods({
 	},
 
 	addMessage: function(messageObject){
-		console.log("Add chat");
-		console.log(messageObject);
 		var messageID = Messages.insert(
 			{	'name': messageObject.name,
 				'message': messageObject.message,
 				'time': messageObject.time}
 			);
-
 		console.log(messageID);
-		// console.log(Messages);
-		// Messages.insert({
-		// 	name: params[0],
-		// 	message: params[1],
-		// 	time: params[2]
-		// });
+	},
+
+	addConversation: function(messageObject){
+		console.log("Add chat");
+		console.log(messageObject);
+		var messageID = Conversations.insert(
+			{	'name': messageObject.sender,
+				'message': messageObject.message,
+				'time': messageObject.time,
+				'receiver': messageObject.receiver,
+			});		
+		console.log(messageID);
 	}
 });
 

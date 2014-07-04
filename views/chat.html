@@ -1,0 +1,32 @@
+<template name="messages">
+    <p>
+    	{{#each newmessages}}
+    		testing<br>
+    	{{/each}}
+        {{#each messages}}
+            <strong style="color:'orange';">{{name}}</strong>- {{message}} <br>
+        {{/each}}
+    </p>
+</template>
+
+<template name="entryfield">
+	<div style="height:400px; width: 250px;">
+		<div id="conversation" style="position: relative; height:280px; width:100%; overflow: scroll; display: block; overflow-x: hidden;">
+
+			{{> messages}}
+
+		</div>
+		<div style="position: absolute; left: 20px; bottom: 0px;">	
+			<!-- <input type="text" id="name" placeholder="Name" style="width: 50px" /> --> 
+			<input type="text" id="message" placeholder="Your message" style="width: 200px" />
+		</div>
+	</div>
+
+	<script>
+		$( document ).ready(function() {
+			var chatDiv = document.getElementById("conversation");
+			chatDiv.scrollTop = chatDiv.scrollHeight + 20;
+		});
+	</script>
+</template>
+
