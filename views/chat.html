@@ -1,15 +1,18 @@
 <template name="messages">
     <p>
     	{{#each newmessages}}
-    		testing<br>
+    		<strong style="color:'orange';">{{name}}</strong>- {{message}} <br>
     	{{/each}}
-        {{#each messages}}
+        <!-- {{#each messages}}
             <strong style="color:'orange';">{{name}}</strong>- {{message}} <br>
-        {{/each}}
+        {{/each}} -->
     </p>
 </template>
 
 <template name="entryfield">
+
+	{{#if activeusername}}
+
 	<div style="height:400px; width: 250px;">
 		<div id="conversation" style="position: relative; height:280px; width:100%; overflow: scroll; display: block; overflow-x: hidden;">
 
@@ -23,10 +26,17 @@
 	</div>
 
 	<script>
-		$( document ).ready(function() {
-			var chatDiv = document.getElementById("conversation");
-			chatDiv.scrollTop = chatDiv.scrollHeight + 20;
-		});
+		// $( document ).ready(function() {
+		// 	var chatDiv = document.getElementById("conversation");
+		// 	chatDiv.scrollTop = chatDiv.scrollHeight + 20;
+		// });
 	</script>
+
+	{{else}}
+		<h6>Enter your name and continue.</h6>
+		<input type="text" id="username" placeholder="what's your name" style="width: 200ox"/>
+	{{/if}}
+
 </template>
 
+<!-- ////////////////////////////////////////////////////////////////////// -->

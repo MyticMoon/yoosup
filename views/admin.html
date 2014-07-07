@@ -1,7 +1,7 @@
 <template name="admin">
 	<p>
 		{{#each conversations}}
-			{{> modal receiver=username }}
+			{{> modal receiver=username receiver_session_id=session_id }}
 			<br>
 		{{/each}}
 	</p>
@@ -21,7 +21,7 @@
             </div>
             <div class="modal-body">
                 <h3>Modal Body</h3>
-            	{{> entryfield sender="admin" }}
+            	{{> adminentryfield receiver_sessionid=receiver_sessionid }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -33,3 +33,32 @@
 
 </template>
 
+
+<!-- Create admin's chat template -->
+
+<template name="adminentryfield">
+
+
+	<div style="height:400px; width: 250px;">
+		<div id="conversation" style="position: relative; height:280px; width:100%; overflow: scroll; display: block; overflow-x: hidden;">
+
+			{{> adminmessages receiver_sessionid=receiver_sessionid}}
+
+		</div>
+		<div style="position: absolute; left: 20px; bottom: 0px;">	
+			<!-- <input type="text" id="name" placeholder="Name" style="width: 50px" /> --> 
+			<input type="text" id="message" placeholder="Your message" style="width: 200px" />
+		</div>
+	</div>
+</template>
+
+<template name="adminmessages">
+    <p>
+    	{{#each messages sender="admin" receiver_sessionid=receiver_sessionid }}
+    		<strong style="color:'orange';">{{name}}</strong>- {{message}} <br>
+    	{{/each}}
+        <!-- {{#each messages}}
+            <strong style="color:'orange';">{{name}}</strong>- {{message}} <br>
+        {{/each}} -->
+    </p>
+</template>

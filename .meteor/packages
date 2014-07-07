@@ -10,3 +10,4 @@ accounts-ui
 accounts-twitter
 accounts-facebook
 router
+session-timeout

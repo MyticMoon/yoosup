@@ -2,7 +2,7 @@ Questions = new Meteor.Collection("questions");
 Messages = new Meteor.Collection("messages");
 AdminConversations = new Meteor.Collection("adminconversations");
 Conversations = new Meteor.Collection("conversations");
-
+ActiveConversations = new Meteor.Collection("activeconversations");
 
 Meteor.startup(function () {
     
@@ -37,7 +37,7 @@ Meteor.methods({
 
 	addMessage: function(messageObject){
 		var messageID = Messages.insert(
-			{	'name': messageObject.name,
+			{	'name': messageObject.sender,
 				'message': messageObject.message,
 				'time': messageObject.time}
 			);
@@ -52,8 +52,18 @@ Meteor.methods({
 				'message': messageObject.message,
 				'time': messageObject.time,
 				'receiver': messageObject.receiver,
+				'session_id': messageObject.session_id,
 			});		
 		console.log(messageID);
+	},
+
+	addActiveConversation: function(activeObject) {
+		console.log("Active messages");
+		ActiveConversations.insert({
+			'session_id': activeObject.session_id,
+			'username': activeObject.username,
+			'receiver': activeObject.receiver
+		});
 	}
 });
 

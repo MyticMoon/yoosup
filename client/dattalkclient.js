@@ -2,6 +2,7 @@ Questions = new Meteor.Collection("questions");
 Messages = new Meteor.Collection("messages");  //old
 AdminConversations = new Meteor.Collection("adminconversations");  //obsolete
 Conversations = new Meteor.Collection("conversations");
+ActiveConversations = new Meteor.Collection("activeconversations");
 
 if(Meteor.isClient) {
   Template.admin.conversations = function () {
@@ -26,7 +27,6 @@ if(Meteor.isClient) {
   };
 
   Template.question.events({
-   
       'click': function () {
           Session.set("selected_question", this._id);
       },
@@ -50,68 +50,96 @@ if(Meteor.isClient) {
       }
    });
 
-  Template.entryfield.events({
+Template.entryfield.events({
     "keydown #message": function(event){
-      if(event.which == 13){
-        // Submit the form
-        //var name = document.getElementById('name');
-        var message = document.getElementById('message');
+        if(event.which == 13){
+            // Submit the form
+            //var name = document.getElementById('name');
+            var message = document.getElementById('message');
 
-        //if(name.value != '' && message.value != ''){
-          console.log(Session.get('sender'));
-        if(message.value != ''){
-          //var messageObject = {'name': name.value,
-          var messageObject = {
-                     'sender': Session.get('sender'),
-          					 'message': message.value,
-          					 'time': Date.now(),
-                     'receiver': Session.get('receiver'),
-      		};
+            //if(name.value != '' && message.value != ''){
+              console.log(Session.get('sender'));
+            if(message.value != ''){
+              //var messageObject = {'name': name.value,
+                var messageObject = {
+                    'sender': Session.get('sender'),
+              		'message': message.value,
+              		'time': Date.now(),
+                    'receiver': Session.get('receiver'),
+                    'session_id': Meteor.connection._lastSessionId,
+          		};
+            }
+            // console.log(Meteor.user().profile.name);
+          	// Meteor.call("addMessage", messageObject);
+            Meteor.call("addConversation", messageObject);
+            	
+          	// console.log(Messages.findOne());
+            // name.value = '';
+            var chatDiv = document.getElementById("conversation");  
+            chatDiv.scrollTop = chatDiv.scrollHeight - 50;
+            message.value = '';
+
         }
-        console.log(Meteor.user().profile.name);
-      	Meteor.call("addMessage", messageObject);
-        Meteor.call("addConversation", messageObject);
-        	
-      	console.log(Messages.findOne());
-          //name.value = '';
-        var chatDiv = document.getElementById("conversation");  
-        chatDiv.scrollTop = chatDiv.scrollHeight - 50;
-          message.value = '';
-        
-       }
-      }
-    });
+    },
 
-  Template.messages.messages = function(){
-      return Messages.find({}, { sort: { time: 1 }});
-  }
+    "keydown #username": function(event) {
+        if(event.which == 13) {
+            console.log('enter hit');
+            var username = document.getElementById('username');
+            if(username.value != ''){
+                Session.set('sender', username.value);
+                var activeObject = {
+                    'username': username.value,
+                    'session_id': Meteor.connection._lastSessionId
+                };
+                Meteor.call("addActiveConversation", activeObject);    
+            }     
+        }
+    }
+});
 
-  Template.messages.newmessages = function() {
+    //old
+    // Template.messages.messages = function(){
+    //   return Messages.find({}, { sort: { time: 1 }});
+    // }
+
+    Template.messages.newmessages = function() {
       var sender = Session.get('sender');
       var receiver = Session.get('receiver');
       console.log(sender);
       console.log(receiver);
-      return Conversations.find({$or: [{name:sender},{receiver:sender}]}, {sort: { time: 1}});
-  }
-
-  Meteor.Router.add('/' , 'homepage');
-  Meteor.Router.add('/chatwindow' , 'chatwindow');
-
-  Meteor.Router.add({
-      '/chatwindow/:sender/:receiver': function(sender, receiver){
-       Session.set('sender', sender);
-       Session.set('receiver', receiver);
-       return 'chatwindow';
+      return Conversations.find({$or: [{name:sender},{receiver:sender}], session_id: Meteor.connection._lastSessionId}, {sort: { time: 1}});
     }
-  });
 
-  Meteor.Router.add('/admin' , 'admin');
+    Meteor.Router.add('/' , 'homepage');
+    Meteor.Router.add('/chatwindow' , 'chatwindow');  //old
 
-//register handle bar for session:
-  Handlebars.registerHelper('session', function(input) {
-    return Session.get(input);
-  });  
+    Meteor.Router.add('/admin' , 'admin');  //old
+
+    //register handle bar for session:
+    Handlebars.registerHelper('session', function(input) {
+        return Session.get(input);
+    });  
+
+    Meteor.Router.add({
+        '/chatwindow/client/:admin_id' : function (admin_id) {
+            Session.set('admin_id', admin_id );
+            return 'chatwindow';
+        }
+    });
+
+    Meteor.Router.add({
+        '/chatwindow/admin/:admin_id': function () {
+            return 'admin';
+        }
+    });
+
+//////////////////////////////////////////////////////////////////////////////
+
+// New code
+
+    Template.entryfield.activeusername = function () {
+        console.log(Session.get('sender'));
+        return (Session.get('sender') !== 'undefined' &&  Session.get('sender'));
+    }
 }
-
-
-

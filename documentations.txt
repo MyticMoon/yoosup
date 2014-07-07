@@ -5,8 +5,13 @@ https://github.com/jordansissel/heroku-buildpack-meteor
 	1a) Router documentations: 
 	https://github.com/tmeasday/meteor-router
 	http://www2.bindle.me/blog/index.php/679/page-transitions-in-meteor-getleague-com  
-	2b) Iron Router (might be better solution, more popular)
+	
+	1b) Iron Router (might be better solution, more popular)
 
+	1c) To pass value from route to template -> use handler bar
+	Pass value from template to server/client side -> use dictionary
+
+	
 -------------------------------------------------------
 
 2) Next steps:
@@ -31,3 +36,17 @@ Link : chat/sender/receiver
 -need to come up with the process of setting up (marketing)
 -build up a theme for the website (cost $100/month, theme $1000) could be better than Zopim right now
 -invitation discount
+
+--------------------------------------------------------
+
+3) Template Blaze template
+
+
+--------------------------------------------------------
+
+4) Session:
+
+To get session id
+Meteor.connection._lastSessionId
+
+Session timeout: https://atmospherejs.com/package/session-timeout
