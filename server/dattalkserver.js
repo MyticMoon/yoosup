@@ -62,7 +62,7 @@ Meteor.methods({
 		ActiveConversations.insert({
 			'session_id': activeObject.session_id,
 			'username': activeObject.username,
-			'receiver': activeObject.receiver
+			'receiver': activeObject.receiver,
 		});
 	}
 });

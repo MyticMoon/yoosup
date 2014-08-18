@@ -1,7 +1,7 @@
 <template name="admin">
 	<p>
 		{{#each conversations}}
-			{{> modal receiver=username receiver_session_id=session_id }}
+			{{> modal client=username receiver_session_id=session_id }}
 			<br>
 		{{/each}}
 	</p>
@@ -10,55 +10,53 @@
 <template name="modal">
 	<a href="#" class="btn btn-lg btn-success"
    data-toggle="modal"
-   data-target="#basicModal">{{receiver}} chat</a>
+   data-target="#basicModal{{receiver_session_id}}">{{client}} chat</a>
 
-   <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+   <div class="modal fade" id="basicModal{{receiver_session_id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
-            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+            <h4 class="modal-title">Conversation with {{client}}</h4>
             </div>
             <div class="modal-body">
-                <h3>Modal Body</h3>
-            	{{> adminentryfield receiver_sessionid=receiver_sessionid }}
+                <!-- <h3>Chat windows</h3> -->
+            	{{> adminentryfield receiver_session_id=receiver_session_id receiver=client }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
         </div>
+      </div>
     </div>
-  </div>
-</div>
-
 </template>
 
 
 <!-- Create admin's chat template -->
 
 <template name="adminentryfield">
+	<div style="height:400px; width: 530px;">
+		<div style="position: relative; height:360; width:100%; overflow: scroll; display: block; overflow-x: hidden;">
 
-
-	<div style="height:400px; width: 250px;">
-		<div id="conversation" style="position: relative; height:280px; width:100%; overflow: scroll; display: block; overflow-x: hidden;">
-
-			{{> adminmessages receiver_sessionid=receiver_sessionid}}
+			{{> adminmessages receiver_session_id=receiver_session_id}}
 
 		</div>
 		<div style="position: absolute; left: 20px; bottom: 0px;">	
-			<!-- <input type="text" id="name" placeholder="Name" style="width: 50px" /> --> 
-			<input type="text" id="message" placeholder="Your message" style="width: 200px" />
+			{{> admininputfield receiver_session_id=receiver_session_id receiver=receiver}}
 		</div>
 	</div>
 </template>
 
+<template name="admininputfield">
+    <input class="message input field" type="text" id="message{{receiver_session_id}}" placeholder="Your message" style="width: 500px"/>
+    <input type="hidden" id="receiver{{receiver_session_id}}" name="Language" value="{{receiver}}">
+</template>
+
 <template name="adminmessages">
     <p>
-    	{{#each messages sender="admin" receiver_sessionid=receiver_sessionid }}
-    		<strong style="color:'orange';">{{name}}</strong>- {{message}} <br>
+    	{{#each messages receiver_session_id=receiver_session_id }}
+    		<strong style="color:'orange';">{{name}}</strong>: {{message}} <br>
     	{{/each}}
-        <!-- {{#each messages}}
-            <strong style="color:'orange';">{{name}}</strong>- {{message}} <br>
-        {{/each}} -->
     </p>
 </template>
